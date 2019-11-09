@@ -86,7 +86,7 @@ def tokenizator(s):
     state = 'start'
     i = 0
     word = []
-    flfs = False# fl firstSigns
+    flfs = False  # fl firstSigns
 
     while 1:
         if state == 'start':
@@ -139,7 +139,7 @@ def check_tab():
     countSpaces = 0
     fl = False
     flFirstB = True
-    flw = 0# wordsWithIndent
+    flw = 0  # wordsWithIndent
 
     if tokens[0] == ' ':
         print('tab error, str', s, 'pos', 0)
@@ -241,7 +241,7 @@ def set_variable(key, typeT, s):
 def check_const_style():
     global tokens
     global reservedWords
-    global types    
+    global types
     global constStyle
 
     fl = False
@@ -260,7 +260,8 @@ def check_const_style():
             continue
         if token == 'const':
             if flu:
-                print('logic error: Word has already been used, str', s, 'word -', token)
+                textError = 'logic error: Word has already been used, str'
+                print(textError, s, 'word -', token)
             fl = True
             flu = True
             continue
@@ -270,7 +271,7 @@ def check_const_style():
         if fl and re.match(r'\w+', token):
             if reservedWords.count(token) != 0:
                 print('style error: Word reserved, str', s, 'word -', token)
-            elif types.count(token) != 0:# типизированная константа
+            elif types.count(token) != 0:  # типизированная константа
                 typeT = token
             elif len(key) == 0:
                 key = token
@@ -297,7 +298,7 @@ def check_const_style():
                 if flp and (token2 == value) and (token1 == '.'):
                     value = value + '.' + token
                     flp = False
-            if key and value:                
+            if key and value:
                 if (constStyle == 'all small') and (key != key.lower()):
                     print('const style error, str', s, 'word -', key)
                 if (constStyle == 'all big') and (key != key.upper()):
@@ -334,7 +335,7 @@ def set_type_const(key, value, typeT, s):
             ('syntaxis error, str', s, 'word', value)
         elif (lenm == 1) or (lenp == 1):
             if (value[1] != '-') or (value[1] != '+'):
-               ('syntaxis error, str', s, 'word', value) 
+                ('syntaxis error, str', s, 'word', value)
     elif (re.match(r'\.', value)) or (re.match(r'E', value)):
         typeT = 'real'
     else:
@@ -388,7 +389,8 @@ def check_type_style():
             continue
         elif token == 'type':
             if flu:
-                print('logic error: Word has already been used, str', s, 'word -', token)
+                textError = 'logic error: Word has already been used, str'
+                print(textError, s, 'word -', token)
             fl = True
             flu = True
             continue
@@ -419,9 +421,9 @@ def check_punctuation():
     fl = False
     flV = False
     strV = 0
-    flBracket = False #' and "
+    flBracket = False  # ' and "
     flEnd = False
-    lastStrWithV = 0 #;
+    lastStrWithV = 0  # ;
     words = wordsWithoutPunctuation
 
     for index in range(len(tokens)):
@@ -450,7 +452,8 @@ def check_punctuation():
                 if flBracket:
                     continue
                 if lastStrWithV == s - 1:
-                    print('punctuation error: Did\'t wait ; before else, str', s - 1)#запятая перед else
+                    textError = 'punctuation error: Did\'t wait ; before else, str'
+                    print(textError, s - 1)  # запятая перед else
             elif token1 == '\n':
                 if flBracket:
                     continue
@@ -484,11 +487,11 @@ def check_files():
         f = open(s)
         for line in f:
             tokenizator(line)
-        #print(tokens)        
+        # print(tokens)        
         check_style()
         check_tab()
         check_punctuation()
-        #print(tokens)
+        # print(tokens)
         f.close()
 
 
